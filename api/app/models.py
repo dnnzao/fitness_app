@@ -19,7 +19,7 @@ class Exercise(db.Model):
     muscle_group_id = db.Column(db.Integer, db.ForeignKey('muscle_groups.id'))
     muscle_group = db.relationship('MuscleGroup', back_populates="exercises")
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    description = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False, server_default='')
 
 
 MuscleGroup.exercises = db.relationship('Exercise', order_by=Exercise.id, back_populates="muscle_group")
@@ -51,6 +51,11 @@ class Quadriceps(db.Model):
 
 class Posterior(db.Model):
     __tablename__ = 'posterior'
+    id = db.Column(db.Integer, primary_key=True)
+    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
+
+class Calves(db.Model):
+    __tablename__ = 'calves'
     id = db.Column(db.Integer, primary_key=True)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'))
 
