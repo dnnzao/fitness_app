@@ -9,17 +9,25 @@
 
 
 from flask import Flask
-from .routes import configure_routes
-from .migrations.migrate import migrate_database
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+
     app.config.from_object('config.Config')
 
-    configure_routes(app)
-    
-    app.cli.add_command(migrate_database)
+    app.config["SQLALCHEMY_ECHO"] = True
+    app.config["SQLALCHEMY_RECORD_QUERIES"] = True
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.init_app(app)
+    migrate = Migrate(app, db)
+
+    with app.app_context():
+        from . import routes, models
+        routes.configure_routes(app)
 
     return app
-
-

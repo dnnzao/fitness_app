@@ -7,8 +7,7 @@ Author: Dênio Barbosa Júnior
 Copyright (c) 2024 Your Company
 '''
 
-import os
 
 class Config:
-    DATABASE_URI = 'postgresql://deniojr:password123@localhost:5432/fitness_db'
-
+    SQLALCHEMY_DATABASE_URI = 'postgresql://deniojr:password123@localhost:5432/fitness_db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
