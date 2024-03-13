@@ -16,10 +16,11 @@ class Exercise(db.Model):
     __tablename__ = 'exercises'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=False) 
     muscle_group_id = db.Column(db.Integer, db.ForeignKey('muscle_groups.id'))
     muscle_group = db.relationship('MuscleGroup', back_populates="exercises")
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    description = db.Column(db.Text, nullable=False)
+
 
 MuscleGroup.exercises = db.relationship('Exercise', order_by=Exercise.id, back_populates="muscle_group")
 

@@ -21,6 +21,8 @@ def upgrade():
     with op.batch_alter_table('exercises', schema=None) as batch_op:
         batch_op.add_column(sa.Column('user_id', sa.Integer(), nullable=True))
         batch_op.create_foreign_key(None, 'users', ['user_id'], ['id'])
+        batch_op.add_column(sa.Column('description', sa.TEXT(), nullable=False, server_default=''))
+
 
     # ### end Alembic commands ###
 
@@ -30,5 +32,7 @@ def downgrade():
     with op.batch_alter_table('exercises', schema=None) as batch_op:
         batch_op.drop_constraint(None, type_='foreignkey')
         batch_op.drop_column('user_id')
+        batch_op.add_column(sa.Column('description', sa.TEXT(), nullable=False, server_default=''))
+
 
     # ### end Alembic commands ###
